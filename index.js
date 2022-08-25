@@ -10,7 +10,7 @@ const {
   generateShortURL,
   saveShortURL,
   getShortURL,
-} = require('./middleware');
+} = require('./middleware/middleware');
 
 const app = express();
 

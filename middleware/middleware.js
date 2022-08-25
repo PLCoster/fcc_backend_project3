@@ -1,8 +1,8 @@
 const dns = require('dns').promises;
 
-const urlRegex = require('./helpers/urlRegex');
-const generatePathStr = require('./helpers/generatePathStr');
-const ShortURL = require('./models/shortURL');
+const urlRegex = require('../helpers/urlRegex');
+const generatePathStr = require('../helpers/generatePathStr');
+const ShortURL = require('../models/ShortURL');
 
 const SITE_URL =
   process.env.RUN_MODE === 'development'
