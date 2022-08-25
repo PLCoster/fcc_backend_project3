@@ -9,6 +9,7 @@ const {
   checkValidURL,
   generateShortURL,
   saveShortURL,
+  getShortURL,
 } = require('./middleware');
 
 const app = express();
@@ -57,6 +58,14 @@ app.post(
     return res.json({ original_url, short_url, short_link });
   },
 );
+
+// GET route to access a previously shortened URL
+// Redirects user to original url if shortened URL is found
+app.get('/api/shorturl/:urlStr', getShortURL, (req, res) => {
+  const { original_url } = res.data.shortURLDocument;
+  console.log('ORIGINAL URL: ', original_url);
+  return res.redirect(original_url);
+});
 
 // 404 page not found:
 app.get('*', function (req, res) {

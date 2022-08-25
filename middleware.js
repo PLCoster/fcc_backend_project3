@@ -6,13 +6,14 @@ const ShortURL = require('./models/shortURL');
 
 const SITE_URL =
   process.env.RUN_MODE === 'development'
-    ? `http://localhost:${process.env.PORT || 3000}`
-    : `https://fcc-backend-project3.plcoster.repl.co/`;
+    ? `http://localhost:${process.env.PORT || 3000}/api/shorturl/`
+    : `https://fcc-backend-project3.plcoster.repl.co/api/shorturl/`;
 
 const middleware = {};
 
 // Takes 'url' parameter from req.body and determines if url is valid:
 middleware.checkValidURL = (req, res, next) => {
+  res.data = res.data || {};
   const urlStr = req.body.url;
 
   // Test given URL string against regex
@@ -29,7 +30,8 @@ middleware.checkValidURL = (req, res, next) => {
   dns
     .resolve(hostname)
     .then(() => {
-      //If we get here url is valid, go to next middleware:
+      //If we get here url is valid, go to next middleware
+      res.data.original_url = `${protocol || 'https://'}${url}`;
       next();
     })
     .catch((err) => {
@@ -66,12 +68,12 @@ middleware.generateShortURL = async (req, res, next) => {
   return res.json({ error: 'Could not generate a unique short URL' });
 };
 
-// Given the unique shortURL on res.data.short_url, create a new ShortURL document
+// Given the unique ShortURL on res.data.short_url, create a new ShortURL document
 // Add the ShortURL document to res.data.shortURLDocument
 middleware.saveShortURL = (req, res, next) => {
-  const original_url = req.body.url;
+  const original_url = res.data.original_url;
   const short_url = res.data.short_url;
-  const short_link = SITE_URL + '/' + short_url;
+  const short_link = SITE_URL + short_url;
   ShortURL.create({ original_url, short_url, short_link })
     .then((document) => {
       res.data.shortURLDocument = document;
@@ -81,6 +83,26 @@ middleware.saveShortURL = (req, res, next) => {
       console.error('Error when trying to create ShortURL in DB: ', err);
       return res.json({ error: 'Could not save ShortURL in DB' });
     });
+};
+
+// Check database for requested short_url string
+// If found, adds requested ShortURL document to res.data.shortURLDocument
+middleware.getShortURL = (req, res, next) => {
+  const requestedURL = req.params.urlStr;
+
+  ShortURL.findOne({ short_url: requestedURL }).then((document) => {
+    res.data = res.data || {};
+
+    if (!document) {
+      return res.json({
+        error: 'Short URL not found',
+        short_url: requestedURL,
+      });
+    }
+
+    res.data.shortURLDocument = document;
+    return next();
+  });
 };
 
 module.exports = middleware;
