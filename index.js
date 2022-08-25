@@ -1,14 +1,15 @@
 // .env file can hold PORT variable if desired
 require('dotenv').config();
 
-const dns = require('dns').promises;
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const urlRegex = require('./helpers/urlRegex');
-const generatePathStr = require('./helpers/generatePathStr');
-const shortURL = require('./models/shortURL');
+const {
+  checkValidURL,
+  generateShortURL,
+  saveShortURL,
+} = require('./middleware');
 
 const app = express();
 
@@ -44,51 +45,18 @@ app.get('/api/hello', function (req, res) {
   res.json({ greeting: 'hello API' });
 });
 
-// POST route to submit URLs to be shortened:
-app.post('/api/shorturl', (req, res) => {
-  const urlStr = req.body.url;
-
-  // Test given URL string against regex
-  const urlMatch = urlStr.match(urlRegex);
-  if (!urlMatch) {
-    return res.json({ error: 'invalid url', url: urlStr });
-  }
-
-  // If no PROTOCOL, then add one, get hostname from URL object:
-  const { PROTOCOL: protocol, URL: url } = urlMatch.groups;
-  const hostname = new URL(`${protocol || 'https://'}${url}`).hostname;
-
-  // Check hostname is valid / exists via dns
-  dns
-    .resolve(hostname)
-    .then(async () => {
-      // URL is legitimate, add shortened URL to DB and return
-      let tries = 0;
-      let short_url;
-
-      // Try up to 5 times to generate a unique, unused short url
-      while (tries < 5) {
-        short_url = generatePathStr();
-
-        const exists = await shortURL.findOne({ short_url });
-        if (!exists) {
-          return Promise.resolve(short_url);
-        }
-      }
-
-      // Something has gone wrong generating a unique short url
-      return Promise.reject('Could not find a unique, unused short url');
-    })
-    // Otherwise create a MongoDB Document and return info as JSON to user
-    .then((short_url) => shortURL.create({ original_url: urlStr, short_url }))
-    .then(({ original_url, short_url }) =>
-      res.json({ original_url, short_url }),
-    )
-    .catch((err) => {
-      console.error('ERROR when trying to resolve given address: ', err);
-      return res.json({ error: 'invalid url', url: urlStr });
-    });
-});
+// POST route to submit URLs to be shortened
+// Returns json with original and shortened url path if successful
+app.post(
+  '/api/shorturl',
+  checkValidURL,
+  generateShortURL,
+  saveShortURL,
+  (req, res) => {
+    const { original_url, short_url } = res.data.shortURLDocument;
+    return res.json({ original_url, short_url });
+  },
+);
 
 // 404 page not found:
 app.get('*', function (req, res) {
