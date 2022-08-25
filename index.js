@@ -63,7 +63,6 @@ app.post(
 // Redirects user to original url if shortened URL is found
 app.get('/api/shorturl/:urlStr', getShortURL, (req, res) => {
   const { original_url } = res.data.shortURLDocument;
-  console.log('ORIGINAL URL: ', original_url);
   return res.redirect(original_url);
 });
 
