@@ -177,6 +177,7 @@
               required
             />
             <input type="submit" class="btn btn-primary" value="Shorten URL" />
+            <p>NOTE: Shortened URLS are valid for 24hrs</p>
           </fieldset>
         </form>
       </section>
@@ -185,15 +186,18 @@
 
       <h3>Example Usage:</h3>
 
+      <h5>To create a shortened URL:</h5>
       <ul class="usage-list">
-        <h4>To create a shortened URL:</h4>
         <li>Submit a valid URL using the input form above.</li>
         <li>
           Alternatively, submit a POST request to
           <code>/api/shorturl</code> with a body containing a url encoded field
           of 'url' (e.g. <code>'url=https://google.com'</code>)
         </li>
-        <h4>To use a Shortened URL:</h4>
+      </ul>
+
+      <h5>To use a Shortened URL:</h5>
+      <ul class="usage-list">
         <li>
           Visit <code>/api/shorturl/&lt;SHORTURL&gt;</code>, with a valid
           SHORTURL, to be redirected to the original URL.
@@ -210,10 +214,10 @@
       </ul>
 
       <h3>Example Output:</h3>
-      <h4>
+      <p>
         On submitting a URL to be shortened, a JSON of the following form will
         be returned:
-      </h4>
+      </p>
       <p>
         <code>
           {

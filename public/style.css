@@ -32,7 +32,6 @@ h4 {
 
 .usage-list li {
   margin-bottom: 0.5em;
-  margin-left: 20px;
 }
 
 code {
@@ -52,9 +51,14 @@ a {
 
 .form-group label,
 .form-group input {
-  margin-top: 10px;
+  margin: 10px;
   max-width: 400px;
   text-align: center;
+}
+
+.form-group p {
+  margin-top: 10px;
+  margin-bottom: 0;
 }
 
 /****** NavBar Styles ******/
