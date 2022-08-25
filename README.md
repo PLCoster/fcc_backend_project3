@@ -30,6 +30,8 @@ The third Free Code Camp: Back End Development Project is a URL shortener micros
 
 - Be redirected to the original URL by sending a GET request to `/api/shorturl/<SHORT_URL>` where `SHORT_URL` is the `short_url` string returned via JSON when a URL to be shortened is submitted.
 
+Shortened URL records are stored in a MongoDB database, and expire after 24hrs.
+
 ### Project Files:
 
 - `index.js` - the main entry point of the application, an express web server handling the routes defined in the specification.
