@@ -53,8 +53,8 @@ app.post(
   generateShortURL,
   saveShortURL,
   (req, res) => {
-    const { original_url, short_url } = res.data.shortURLDocument;
-    return res.json({ original_url, short_url });
+    const { original_url, short_url, short_link } = res.data.shortURLDocument;
+    return res.json({ original_url, short_url, short_link });
   },
 );
 

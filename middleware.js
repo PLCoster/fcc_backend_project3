@@ -4,6 +4,11 @@ const urlRegex = require('./helpers/urlRegex');
 const generatePathStr = require('./helpers/generatePathStr');
 const ShortURL = require('./models/shortURL');
 
+const SITE_URL =
+  process.env.RUN_MODE === 'development'
+    ? `http://localhost:${process.env.PORT || 3000}`
+    : `https://fcc-backend-project3.plcoster.repl.co/`;
+
 const middleware = {};
 
 // Takes 'url' parameter from req.body and determines if url is valid:
@@ -66,7 +71,8 @@ middleware.generateShortURL = async (req, res, next) => {
 middleware.saveShortURL = (req, res, next) => {
   const original_url = req.body.url;
   const short_url = res.data.short_url;
-  ShortURL.create({ original_url, short_url })
+  const short_link = SITE_URL + '/' + short_url;
+  ShortURL.create({ original_url, short_url, short_link })
     .then((document) => {
       res.data.shortURLDocument = document;
       next();
