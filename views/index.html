@@ -2,31 +2,238 @@
 
 <html>
   <head>
-    <title>URL Shortener Microservice | freeCodeCamp.org</title>
+    <title>URL Shortener Microservice</title>
+
+    <!-- FAVICONS -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicons/apple-touch-icon.png"
+    />
     <link
       rel="icon"
       type="image/png"
-      href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png"
+      sizes="32x32"
+      href="/public/favicons/favicon-32x32.png"
     />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/public/favicons/favicon-16x16.png"
+    />
+    <link rel="manifest" href="/public/site.webmanifest" />
+
+    <!-- STYLES -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="style.css" rel="stylesheet" type="text/css" />
     <link href="/public/style.css" rel="stylesheet" type="text/css" />
   </head>
 
   <body>
-    <h1>URL Shortener Microservice</h1>
-    <main>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href=".">URL Shortener Microservice</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="https://plcoster.github.io/homepage/"
+              >
+                Home
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                FreeCodeCamp Backend Projects
+              </a>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://fcc-backend-project1.plcoster.repl.co"
+                  >
+                    Timestamp Microservice
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://fcc-backend-project2.plcoster.repl.co"
+                  >
+                    Request Header Parser Microservice
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://fcc-backend-project3.plcoster.repl.co"
+                  >
+                    URL Shortener Microservice
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://fcc-backend-project4.plcoster.repl.co"
+                  >
+                    Exercise Tracker
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="https://fcc-backend-project5.plcoster.repl.co"
+                  >
+                    File Metadata Microservice
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="https://plcoster.github.io/homepage/projects.html"
+              >
+                All Projects
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/PLCoster">
+                <i class="fab fa-github"></i> Github
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://linkedin.com/in/plcoster">
+                <i class="fab fa-linkedin"></i>
+                LinkedIn
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <h1>
+        <img
+          class="logo"
+          src="/public/logo.png"
+          alt="White text saying 'URL on a blue square background"
+        />URL Shortener Microservice
+      </h1>
+
+      <hr />
+
       <section>
         <form action="api/shorturl" method="POST">
-          <fieldset>
-            <legend>URL Shortener</legend>
-            <label for="url_input">URL:</label>
-            <input id="url_input" type="text" name="url" placeholder="https://www.freecodecamp.org/" />
-            <input type="submit" value="POST URL" />
+          <fieldset class="form-group d-flex flex-column align-items-center">
+            <input
+              id="url_input"
+              type="text"
+              class="form-control form-control-lg"
+              name="url"
+              placeholder="URL e.g. https://www.freecodecamp.org/"
+              aria-label="URL to be Shortened"
+              required
+            />
+            <input type="submit" class="btn btn-primary" value="Shorten URL" />
           </fieldset>
         </form>
       </section>
+
+      <hr />
+
+      <h3>Example Usage:</h3>
+
+      <ul class="usage-list">
+        <h4>To create a shortened URL:</h4>
+        <li>Submit a valid URL using the input form above.</li>
+        <li>
+          Alternatively, submit a POST request to
+          <code>/api/shorturl</code> with a body containing a url encoded field
+          of 'url' (e.g. <code>'url=https://google.com'</code>)
+        </li>
+        <h4>To use a Shortened URL:</h4>
+        <li>
+          Visit <code>/api/shorturl/&lt;SHORTURL&gt;</code>, with a valid
+          SHORTURL, to be redirected to the original URL.
+          <br />
+          A shareable link can be found under the "short_link" property of the
+          returned JSON on submitting a URL to be shortened.
+          <br />
+          For example, this short url will redirect you to google.com:
+          <br />
+          <a href="/api/shorturl/G00Gl3"
+            >fcc-backend-project3.plcoster.repl.co/api/shorturl/G00Gl3</a
+          >
+        </li>
+      </ul>
+
+      <h3>Example Output:</h3>
+      <h4>
+        On submitting a URL to be shortened, a JSON of the following form will
+        be returned:
+      </h4>
+      <p>
+        <code>
+          {
+          <br />
+          "original_url": "https://google.com",
+          <br />
+          "short_url": "G00Gl3",
+          <br />
+          "short_link":"https://fcc-backend-project3.plcoster.repl.co/api/shorturl/G00Gl3"
+          <br />
+          }
+        </code>
+      </p>
+
+      <footer>
+        <p>
+          A project set by
+          <a href="https://www.freecodecamp.org/">freeCodeCamp</a>
+        </p>
+      </footer>
     </main>
-    <footer>
-      <p>By <a href="https://www.freecodecamp.org/">freeCodeCamp</a></p>
-    </footer>
   </body>
 </html>
