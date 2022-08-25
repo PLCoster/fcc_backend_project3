@@ -18,7 +18,7 @@ const shortURLSchema = new mongoose.Schema({
   original_url: String,
   short_url: { type: String, unique: true }, // Must be unique!
   short_link: { type: String, unique: true },
-  expireAt: { type: Date, expires: 86400, default: Date.now() }, // Auto Expire document after 1 day
+  createdAt: { type: Date, expires: 86400, default: Date.now }, // Auto Expire document after 1 day
 });
 
 const shortURL = mongoose.model('shortURL', shortURLSchema);
